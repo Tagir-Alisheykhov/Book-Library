@@ -1,0 +1,39 @@
+# имя workflow и события, которые будут его запускать
+name: Django-Library CI
+
+on: [push, pull_request]
+
+
+# добавляем работу
+jobs:
+  # тестирование приложения
+  test:
+    # среда выполнения задач
+    runs-on: ubuntu-latest
+
+    # шаги выполнения
+    steps:
+      # клонирования репозитория с исходным кодом
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      # установка python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      # установка poetry
+      - name: Install poetry
+        run: pip install poetry
+
+      # установка зависимостей
+      - name: Install dependencies
+        run: poetry install --no-interaction
+
+      # применение миграций
+      - name: Run migrate
+        run: python manage.py migrate
+
+      - name: Run tests
+        run: python manage.py test
