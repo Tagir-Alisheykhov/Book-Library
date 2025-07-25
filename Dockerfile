@@ -13,17 +13,17 @@ ENV POETRY_VERSION=2.1.1 \
     POETRY_HOME=/opt/poetry
 
 # Установка poetry
-RUN pip install --no-cache-dir "poetry==$POETRY_VERSION" \
-    && poetry config --system virtualenvs.create false
+RUN pip install --no-cache-dir "poetry==1.8.2" && \
+    poetry config virtualenvs.create false
 
 # Копирование файлов зависимостей
 COPY poetry.lock pyproject.toml ./
 
 # Установка зависимостей
-RUN poetry install --only=main --sync
+RUN poetry install --only=main --no-root
 
 # Копирование кода приложения
-COPY ..
+COPY . .
 
 # Открываем порт для доступа к приложению
 EXPOSE 8000

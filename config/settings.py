@@ -8,11 +8,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-# 'django-insecure-vy-ohhjp3r3&kw$szvs^q-h-1ae0ur-)zb(za86ewv1(!l@u3%'
-
 DEBUG = True if os.getenv('DEBUG') == 'True' else False
 
 ALLOWED_HOSTS = ["*"]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://89.169.187.28',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -62,7 +64,7 @@ DATABASES = {
         'NAME': os.getenv('NAME'),
         'USER': os.getenv('USER'),
         'PASSWORD': os.getenv('PASSWORD'),
-        'HOST': os.getenv('HOST'),
+        'HOST': 'db',
         'PORT': os.getenv('PORT')
     }
 }
