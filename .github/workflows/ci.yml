@@ -33,11 +33,16 @@ jobs:
       # Для ускорения workflow можно добавить кэширование:
       - name: Cache dependencies
         uses: actions/cache@v3
+        # указываем кэшу путь к зависимостям
         with:
           path: | 
             ~/.cache/pypoetry
             .venv
+          # а также ключ для кэша, основан на операционной системе и хэша файла poetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          # если нет ключа, то используем ближайший ключ по префиксу
+          restore-keys: ${{ runner.os }}-poetry-
+
 
       # установка зависимостей
       - name: Install dependencies
